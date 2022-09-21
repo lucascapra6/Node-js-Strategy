@@ -9,4 +9,5 @@ class Usuario {
 let usuario = new Usuario();
 usuario.retornarDadosUsuario((resultado) => {
     console.log(resultado);
+    console.log('oi')
 });
