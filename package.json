@@ -2,10 +2,10 @@
   "name": "curso-node",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Async-Await/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index.js"
+    "dev": "node Async-Await/index.js"
   },
   "author": "",
   "license": "ISC"
