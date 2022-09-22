@@ -35,7 +35,7 @@ const callWithoutPromiseAll = async (usuario) => {
     try {
         console.time('calledWithoutPromiseAll')
         const usuario = await getUsuario()
-        console.log('espera', usuario)
+        console.log('Tem telefone e endereço para vir ainda', usuario)
         const telefone = await getTelefone()
         const endereco = await getEndereco()
         console.log(endereco)
