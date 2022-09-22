@@ -2,11 +2,17 @@
   "name": "curso-node",
   "version": "1.0.0",
   "description": "",
-  "main": "Async-Await/index.js",
+  "main": "src/Async-Await/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node Async-Await/index.js"
+    "dev": "node index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }
