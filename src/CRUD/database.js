@@ -15,8 +15,9 @@ class Database {
     async listarPokemon(nome) {
         const getDadosPokemons = await this.obterDadosArquivo()
         const selectedPokemon = getDadosPokemons.filter(item => nome ? item.nome === nome : true)
+        console.log(selectedPokemon)
         return selectedPokemon
     }
 }
 
-module.exports = new Database()
+module.exports = Database

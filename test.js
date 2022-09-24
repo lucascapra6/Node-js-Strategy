@@ -1,7 +1,8 @@
 const assert = require('assert');
 const PokemonHttpRequester = require("./src/services/PokemonHttpRequester.js")
 const pokemonHttpRequester = new PokemonHttpRequester()
-const database = require('./src/CRUD/database')
+const Database = require('./src/CRUD/database')
+const database = new Database()
 //instalado pacote nock para simular requisiçoes
 const nock = require('nock')
 
@@ -36,7 +37,8 @@ describe('Suite de manipulação de Pokemons', () => {
             nome: 'blastoise',
             tipo: 'agua'
         }
-
-        assert.ok(null, expected)
+        const result = await database.listarPokemon()
+        console.log(result)
+        assert.ok(result, expected)
     })
 })
