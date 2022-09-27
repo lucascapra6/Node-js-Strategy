@@ -38,7 +38,26 @@ describe('Suite de manipulação de Pokemons', () => {
             tipo: 'agua'
         }
         const result = await database.listarPokemon()
-        console.log(result)
         assert.ok(result, expected)
+    })
+    it('deve conter o id, nome e tipo do pokemon esperado', async () => {
+        const expected = {
+            id: 1,
+            nome: 'blastoise',
+            tipo: 'agua'
+        }
+        const result = await database.listarPokemon()
+        assert.deepStrictEqual(result[0], expected)
+    })
+    it('deve cadastrar um pokemon', async () => {
+        const expected = {
+            id:2,
+            nome:'pikachu',
+            tipo:'eletrico'
+        }
+        await database.cadastrar(expected)
+        const result = await database.listarPokemon('pikachu')
+        console.log(result)
+        assert.deepStrictEqual(expected, result[0])
     })
 })
