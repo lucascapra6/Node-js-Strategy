@@ -31,5 +31,30 @@ class Database {
         const result = await this.escreverArquivo(finalData)
         return result
     }
+    async remover(pokemon) {
+        if(!pokemon) {
+            await this.escreverArquivo([]) //limpa a base de dados
+        }
+        const data = await this.obterDadosArquivo()
+        const pokemonIndex = data.findIndex(item => item.nome === pokemon)
+        const pokemonHasNotBeenFound = pokemonIndex === -1
+        if(pokemonHasNotBeenFound) {
+            throw Error('Pokemon nao encontrado')
+        }
+        data.splice(pokemonIndex, 1)
+        return await this.escreverArquivo(data)
+    }
+    async atualizar(id, newPokemonData) {
+        const data = await this.obterDadosArquivo()
+        const pokemonIndex = data.findIndex(item => item.id === id)
+        const pokemonHasNotBeenFound = pokemonIndex === -1
+        if(pokemonHasNotBeenFound) {
+            throw Error('Pokemon nao encontrado')
+        }
+        data.splice(pokemonIndex, 1)
+        const updatedData = [...data, {id, ...newPokemonData}]
+        await this.escreverArquivo(updatedData)
+        return updatedData
+    }
 }
 module.exports = Database
