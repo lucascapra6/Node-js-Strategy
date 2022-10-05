@@ -42,6 +42,11 @@ class Database {
             throw Error('Pokemon nao encontrado')
         }
         data.splice(pokemonIndex, 1)
+        const dataUpdated = data.filter(item => {
+            return item.nome !== pokemon
+        })
+        console.log(dataUpdated)
+        console.log(data)
         return await this.escreverArquivo(data)
     }
     async atualizar(id, newPokemonData) {
@@ -53,6 +58,12 @@ class Database {
         }
         data.splice(pokemonIndex, 1)
         const updatedData = [...data, {id, ...newPokemonData}]
+        // const updatedData = data.map(item => {
+        //     if(item.id === id) {
+        //         return {...item, ...newPokemonData}
+        //     }
+        //     return item
+        // })
         await this.escreverArquivo(updatedData)
         return updatedData
     }

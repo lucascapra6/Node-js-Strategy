@@ -36,14 +36,15 @@ describe('Suite de manipulação de Pokemons', () => {
         nome:'pikachu',
         tipo:'eletrico'
     }
-    const DEFAULT_ITEM_ATUALIZAR = {
+    const DEFAULT_ITEM_PRE_ATUALIZAR = {
         id:2,
         nome: 'blastoise',
         tipo:'agua'
     }
     before(async() => {
+        await database.escreverArquivo([])
         await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
-        await database.cadastrar(DEFAULT_ITEM_ATUALIZAR)
+        await database.cadastrar(DEFAULT_ITEM_PRE_ATUALIZAR)
     })
     it('deve pesquisar pokemon utilizando os arquivos', async () => {
         const expected = DEFAULT_ITEM_CADASTRAR
@@ -64,12 +65,13 @@ describe('Suite de manipulação de Pokemons', () => {
     it('deve remover o pokemon pelo nome', async () => {
         const expected = true
         const result = await database.remover(DEFAULT_ITEM_CADASTRAR.nome)
+        console.log(result)
         assert.deepStrictEqual(result, expected)
     })
     it('deve atualizar as informacoes do pokemon selecionado', async () => {
-        const expected = [DEFAULT_ITEM_CADASTRAR, {...DEFAULT_ITEM_ATUALIZAR, nome: 'charmander', tipo:'fogo'}]
+        const expected = [DEFAULT_ITEM_CADASTRAR, {...DEFAULT_ITEM_PRE_ATUALIZAR, nome: 'charmander', tipo:'fogo'}]
         const pokemonUpdated = {nome: 'charmander', tipo:'fogo'}
-        const result = await database.atualizar(DEFAULT_ITEM_ATUALIZAR.id, pokemonUpdated )
+        const result = await database.atualizar(DEFAULT_ITEM_PRE_ATUALIZAR.id, pokemonUpdated )
         assert.deepStrictEqual(result, expected)
     })
 })
