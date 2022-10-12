@@ -1,6 +1,6 @@
 const ICrud = require('../strategies/interfaces/interfaceCrud')
 
-//classe concreta do Postgres
+//classe concreta do Mongo
 class MongoDB extends ICrud {
     constructor() {
         super();
