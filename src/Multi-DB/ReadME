@@ -4,6 +4,7 @@ docker run \
 -e POSTGRES_USER=lucascapra6 \
 -e POSTGRES_PASSWORD=password \
 -e POSTGRES_DB=heroes \
+-p 5432:5432 \
 -d \
 postgres
 
@@ -38,7 +39,11 @@ docker run \
 -d \
 mongoclient/mongoclient
 
---CRIAR NOVO USUARIO MONGO:
+----CRIAR NOVO USUARIO MONGO:
 docker exec -it mongodb \
 mongo --host localhost -u admin -p password --authenticationDatabase admin \
 --eval "db.getSiblingDB('herois').createUser({user:'lucas', pwd:'mysecretpassword', roles:[{role: 'readWrite', db:'herois'}]})"
+
+----INSTALACAO ORM
+npm install sequelize
+npm install pg-hstore pg

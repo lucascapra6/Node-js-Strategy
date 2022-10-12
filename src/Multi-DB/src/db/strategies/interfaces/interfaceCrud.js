@@ -6,6 +6,9 @@ class NotImplementedExcepetion extends Error {
 
 //interface e suas assinaturas
 class ICrud {
+    async isConnected() {
+        throw new NotImplementedExcepetion('Created Method was not implemented')
+    }
     create(item) {
         throw new NotImplementedExcepetion('Created Method was not implemented')
     }
