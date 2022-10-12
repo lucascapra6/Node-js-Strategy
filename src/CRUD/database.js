@@ -45,8 +45,6 @@ class Database {
         const dataUpdated = data.filter(item => {
             return item.nome !== pokemon
         })
-        console.log(dataUpdated)
-        console.log(data)
         return await this.escreverArquivo(data)
     }
     async atualizar(id, newPokemonData) {

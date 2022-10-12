@@ -65,7 +65,6 @@ describe('Suite de manipulação de Pokemons', () => {
     it('deve remover o pokemon pelo nome', async () => {
         const expected = true
         const result = await database.remover(DEFAULT_ITEM_CADASTRAR.nome)
-        console.log(result)
         assert.deepStrictEqual(result, expected)
     })
     it('deve atualizar as informacoes do pokemon selecionado', async () => {
