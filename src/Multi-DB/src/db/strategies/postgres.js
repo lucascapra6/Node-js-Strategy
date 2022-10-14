@@ -58,11 +58,11 @@ class Postgres extends ICrud {
         const  {dataValues} = await this._heroes.create(item)
         return dataValues
     }
-    read(query) {
-        console.log('item lido no postgres')
+    read(item = {}) {
+        return this._heroes.findAll({where: item, raw: true})
     }
-    update(id, item) {
-        console.log('item atualizado no postgres')
+    update(id, updatedItem) {
+        return this._heroes.update(updatedItem, {where: {id: id}})
     }
     delete(id) {
         console.log('item deletado no postgres')

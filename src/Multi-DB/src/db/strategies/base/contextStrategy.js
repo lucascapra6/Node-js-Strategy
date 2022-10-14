@@ -12,11 +12,11 @@ class ContextStrategy extends ICrud {
     create(item) {
         return this._database.create(item)
     }
-    read(query) {
-        return this._database.read(query)
+    read(item) {
+        return this._database.read(item)
     }
-    update(id, item) {
-        return this._database.update(id, item)
+    update(id, updatedItem) {
+        return this._database.update(id, updatedItem)
     }
     delete(id) {
         return this._database.delete(id)
