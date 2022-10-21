@@ -8,18 +8,6 @@ docker run \
 -d \
 postgres
 
-##----CRIA UMA IMAGEM DO MONGODB
-docker run \
---name mongodb \
--p 27017:27017 \
--e MONGO_INITDB_ROOT_USERNAME=admin \
--e MONGO_INITDB_ROOT_PASSWORD=password \
--d \
-mongo:4
-
-##---- CHECA OS CONTAINERS
-docker ps
-
 #---- ENTRA NO CONTAINER
 docker exec -it postgres /bin/bash
 
@@ -30,6 +18,22 @@ docker run \
 --link /postgres:latest \
 -d \
 adminer
+
+----INSTALACAO ORM
+npm install sequelize
+npm install pg-hstore pg
+
+--------------------------------------------------------------------------------------------------------
+
+##----CRIA UMA IMAGEM DO MONGODB
+docker run \
+--name mongodb \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=password \
+-d \
+mongo:4
+
 
 #----CRIA UM CLIENTE PARA O MONGO
 docker run \
@@ -44,6 +48,9 @@ docker exec -it mongodb \
 mongo --host localhost -u admin -p password --authenticationDatabase admin \
 --eval "db.getSiblingDB('herois').createUser({user:'lucas', pwd:'mysecretpassword', roles:[{role: 'readWrite', db:'herois'}]})"
 
-----INSTALACAO ORM
-npm install sequelize
-npm install pg-hstore pg
+----CONECTAR AO MONGO
+docker exec -it 6f14a041d378 \
+mongo -u lucas -p mysecretpassword --authenticationDatabase herois
+
+----INSTALAÇÃO ODM
+npm install mongoose

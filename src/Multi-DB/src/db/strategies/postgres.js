@@ -6,7 +6,7 @@ class Postgres extends ICrud {
         super();
         this._driver = null
         this._heroes = null
-        this._connect()
+
     }
     async isConnected() {
         try {
@@ -17,7 +17,7 @@ class Postgres extends ICrud {
             return false
         }
     }
-    async _connect() { //metodo privado, sera utilizado somente dentro dessa classe
+    _connect() { //metodo privado, sera utilizado somente dentro dessa classe
         this._driver = new Sequelize(
             'heroes', //nome do banco
             'lucascapra6', // usuario
@@ -29,7 +29,7 @@ class Postgres extends ICrud {
                 operatorsAliases: 0, // stopa erros de deprecation
             }
         )
-        await this.defineModel()
+        // await this.defineModel()
     }
     async defineModel() {
         this._heroes = this._driver.define('heroes', {
@@ -65,7 +65,8 @@ class Postgres extends ICrud {
         return this._heroes.update(updatedItem, {where: {id: id}})
     }
     delete(id) {
-        console.log('item deletado no postgres')
+        const queryId = id ? {id} : {}
+        return this._heroes.destroy({where:queryId })
     }
 }
 

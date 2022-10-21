@@ -12,10 +12,17 @@ const MOCK_HEROI_ATUALIZAR = { //heroi criado para ser atualizado
     skill:'Super speed'
 }
 
+const MOCK_HEROI_DELETAR = {
+    name:'Batman',
+    skill: 'Money'
+}
+
 describe('Postgress Strategy', function() {
     this.timeout(Infinity)
     before(() => {
+        contextPostgres.delete()
         contextPostgres.create(MOCK_HEROI_ATUALIZAR)
+
     })
     it('PostgressSQL connection estabilished', async function () {
         const result = await contextPostgres.isConnected()
@@ -41,10 +48,15 @@ describe('Postgress Strategy', function() {
             name:'Spiderman',
             skill:'Climb walls'
         }
-        console.log(heroToUpdate)
         const resultStatus = await contextPostgres.update(heroToUpdate.id, newHero)
         const [heroUpdated] = await contextPostgres.read({id: heroToUpdate.id})
         assert.deepEqual(resultStatus, [1])
         assert.deepEqual(heroUpdated, newHero)
+    })
+    it('delete a hero in database', async function () {
+        await contextPostgres.create(MOCK_HEROI_DELETAR)
+        const [heroToDelete] = await contextPostgres.read({name: MOCK_HEROI_DELETAR.name})
+        const result = await contextPostgres.delete(heroToDelete.id)
+        assert.deepEqual(result, 1)
     })
 })

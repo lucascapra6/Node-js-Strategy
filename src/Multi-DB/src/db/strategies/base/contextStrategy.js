@@ -5,6 +5,15 @@ class ContextStrategy extends ICrud {
     constructor(strategy) {
         super();
         this._database = strategy
+        this._connect()
+    }
+
+    async _connect() {
+        this._database._connect()
+        await this.defineModel()
+    }
+    async defineModel() {
+        await this._database.defineModel()
     }
     isConnected() {
         return this._database.isConnected()
@@ -22,5 +31,6 @@ class ContextStrategy extends ICrud {
         return this._database.delete(id)
     }
 }
+const teste = new ContextStrategy()
 
 module.exports = ContextStrategy
