@@ -4,8 +4,10 @@
   "description": "",
   "main": "src/Async-Await/index.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --recursive",
-    "dev": "node index.js"
+    "test-recursive": "node node_modules/mocha/bin/mocha --recursive",
+    "dev": "node index.js",
+    "test-all": "mocha *.test.js",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",

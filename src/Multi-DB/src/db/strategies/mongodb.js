@@ -37,7 +37,7 @@ class MongoDB extends ICrud {
     }
 
     async defineModel() {
-        this.herois = new Mongoose.Schema({
+        const heroiSchema = new Mongoose.Schema({
             name: {
                 type:String,
                 required: true
@@ -51,21 +51,19 @@ class MongoDB extends ICrud {
                 default: new Date()
             }
         })
+        this.herois = Mongoose.model('herois', heroiSchema )
 
     }
 
-    async create(item) {
-        const result = await this.herois.create({
-            nome:'Batman',
-            poder: 'Dinheiro'
-        })
-        console.log(result)
+    create(item) {
+        return this.herois.create(item)
     }
-    read(query) {
-        console.log('item lido no mongo')
+    read(item, skip = 0, limit = 10) { //skip: skipa a quantidade de itens indicados  //limit: limita a quantidade de itens que virão
+        return this.herois.find(item).skip(skip).limit(limit)
     }
     update(id, item) {
-        console.log('item atualizado no mongo')
+        console.log(id)
+        return this.herois.updateOne({id}, {_$set: item})
     }
     delete(id) {
         console.log('item deletado no mongo')
