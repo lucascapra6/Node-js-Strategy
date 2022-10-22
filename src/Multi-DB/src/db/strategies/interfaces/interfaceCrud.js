@@ -9,9 +9,6 @@ class ICrud {
     async _connect() {
         throw new NotImplementedExcepetion('Created Method was not implemented')
     }
-    async defineModel() {
-        throw new NotImplementedExcepetion('Created Method was not implemented')
-    }
     async isConnected() {
         throw new NotImplementedExcepetion('Created Method was not implemented')
     }

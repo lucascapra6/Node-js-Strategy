@@ -1,8 +1,7 @@
 const assert = require('assert')
 const Context = require('../../db/strategies/base/contextStrategy')
-const MongoDB = require('../../db/strategies/mongodb')
-const mongoStrategy = new Context(new MongoDB())
-
+const MongoDB = require('../../db/strategies/mongodb/mongodb')
+const heroSchema = require('../../db/strategies/mongodb/schemas/heroesSchema')
 const MOCK_HEROI_CREATE = {
     name:'Spiderman',
     skill:'Climb walls'
@@ -22,11 +21,13 @@ const MOCK_HEROI_UPDATED = {
 
 let HEROI_UPDATE_ID = ''
 
-describe('MongoDB Strategy', function () {
+describe.only('MongoDB Strategy', function () {
+    const connection = MongoDB._connect()
+    const mongoStrategy = new Context(new MongoDB(connection, heroSchema))
     this.beforeAll(async () => {
         mongoStrategy.create(MOCK_HEROI_READ)
         const result = await mongoStrategy.create(MOCK_HEROI_TO_UPDATE)
-        HEROI_UPDATE_ID = result._id
+        HEROI_UPDATE_ID = result.id
     })
     it('mongoDB connection estabilished', async function() {
         const expected = 'Conectado'
@@ -47,9 +48,14 @@ describe('MongoDB Strategy', function () {
         assert.deepEqual(result, expected)
     })
     it('update a hero', async function () {
-        console.log(HEROI_UPDATE_ID)
+        const ITEMS_UPDATED = 1
         const result = await mongoStrategy.update(HEROI_UPDATE_ID, MOCK_HEROI_UPDATED)
-        const _SUCCESS = 1
-        assert.deepEqual(result, _SUCCESS)
+        assert.deepEqual(result.modifiedCount, ITEMS_UPDATED)
+    })
+    it('delete a hero', async function() {
+        const ITEMS_REMOVED = 1
+        const [heroToDelete] = await mongoStrategy.read({name: MOCK_HEROI_READ.name})
+        const result = await mongoStrategy.delete(heroToDelete._id)
+        assert.deepEqual(result.deletedCount, ITEMS_REMOVED)
     })
 })
