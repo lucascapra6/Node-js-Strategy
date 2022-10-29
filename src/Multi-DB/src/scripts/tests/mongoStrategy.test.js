@@ -21,7 +21,7 @@ const MOCK_HEROI_UPDATED = {
 
 let HEROI_UPDATE_ID = ''
 
-describe.only('MongoDB Strategy', function () {
+describe('MongoDB Strategy', function () {
     const connection = MongoDB._connect()
     const mongoStrategy = new Context(new MongoDB(connection, heroSchema))
     this.beforeAll(async () => {
