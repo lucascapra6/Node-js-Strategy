@@ -1,7 +1,7 @@
 const assert = require('assert')
-const Context = require('../../db/strategies/base/contextStrategy')
-const MongoDB = require('../../db/strategies/mongodb/mongodb')
-const heroSchema = require('../../db/strategies/mongodb/schemas/heroesSchema')
+const Context = require('../db/strategies/base/contextStrategy')
+const MongoDB = require('../db/strategies/mongodb/mongodb')
+const heroSchema = require('../db/strategies/mongodb/schemas/heroesSchema')
 const MOCK_HEROI_CREATE = {
     name:'Spiderman',
     skill:'Climb walls'
@@ -21,7 +21,7 @@ const MOCK_HEROI_UPDATED = {
 
 let HEROI_UPDATE_ID = ''
 
-describe('MongoDB Strategy', function () {
+describe.only('MongoDB Strategy', function () {
     const connection = MongoDB._connect()
     const mongoStrategy = new Context(new MongoDB(connection, heroSchema))
     this.beforeAll(async () => {
