@@ -1,5 +1,7 @@
-class HeroRoutes {
+const BaseRoutes = require('../../base/baseRoutes')
+class MongoHeroRoutes extends BaseRoutes {
     constructor(db) {
+        super()
         this.db = db
     }
     read() {
@@ -20,5 +22,14 @@ class HeroRoutes {
             }
         }
     }
+    update() {
+        return {
+            path: '/',
+            method: 'GET',
+            handler: (request, headers) => {
+                return 'Home'
+            }
+        }
+    }
 }
-module.exports = HeroRoutes
+module.exports = MongoHeroRoutes
