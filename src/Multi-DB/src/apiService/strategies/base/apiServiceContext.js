@@ -4,7 +4,7 @@ class ApiServiceContext extends IApiService {
         super()
         this.service = service
     }
-    createRoutes(instance, methods) {
+    async createRoutes(instance, methods) {
         return this.service.createRoutes(instance, methods)
     }
 }

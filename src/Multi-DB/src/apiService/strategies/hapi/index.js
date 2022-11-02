@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 
-class HapiService  {
+class HapiService {
     constructor(port) {
         this.app = new Hapi.Server({
             port: port
@@ -12,11 +12,13 @@ class HapiService  {
         return true
     }
     _listRoutes(instance, methods) {
+        console.log(instance)
         return methods.map(method => instance[method]())
     }
     async createRoutes(instance, methods) {
         this.app.route(this._listRoutes(instance, methods))
-        return this._start()
+        await this._start()
+        return this.app
     }
 }
 

@@ -9,7 +9,19 @@ class MongoHeroRoutes extends BaseRoutes {
             path: '/heroes',
             method: 'GET',
             handler: (request, headers) => {
-                return this.db.read()
+                try {
+                    const {skip, limit, nome} = request.query
+                    const query = nome ? nome : {}
+                    const invalidType = isNaN(limit) || isNaN(skip)
+                    if(invalidType) throw Error('Tipo do parâmetro limit ou skip invalido, insira um número')
+                    return this.db.read(query, skip, limit)
+                } catch (e) {
+                    console.log(e)
+                    return {
+                        status: false,
+                        msg: 'Erro interno no servidor'
+                    }
+                }
             }
         }
     }
