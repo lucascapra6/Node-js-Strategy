@@ -1,4 +1,4 @@
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 class HapiService {
     constructor(port) {
@@ -12,7 +12,6 @@ class HapiService {
         return true
     }
     _listRoutes(instance, methods) {
-        console.log(instance)
         return methods.map(method => instance[method]())
     }
     async createRoutes(instance, methods) {

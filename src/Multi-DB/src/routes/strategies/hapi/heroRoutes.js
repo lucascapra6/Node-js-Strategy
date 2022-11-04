@@ -1,4 +1,5 @@
 const BaseRoutes = require('../../base/baseRoutes')
+const Joi = require('joi')
 class MongoHeroRoutes extends BaseRoutes {
     constructor(db) {
         super()
@@ -8,15 +9,28 @@ class MongoHeroRoutes extends BaseRoutes {
         return {
             path: '/heroes',
             method: 'GET',
+            config: {
+                validate: {
+                    //payload -> body
+                    //headers -> header
+                    //params -> na URL :id
+                    failAction:(request, headers, error) => {
+                        throw error
+                    },
+                    query: Joi.object({
+                        skip: Joi.number().integer().default(0),
+                        limit: Joi.number().integer().default(10),
+                        name: Joi.string().min(3).max(100)
+                    })
+                }
+            },
             handler: (request, headers) => {
                 try {
-                    const {skip, limit, nome} = request.query
-                    const query = nome ? nome : {}
-                    const invalidType = isNaN(limit) || isNaN(skip)
-                    if(invalidType) throw Error('Tipo do parâmetro limit ou skip invalido, insira um número')
+                    const {skip, limit, name} = request.query
+                    const query = name ? {name: name} : {}
                     return this.db.read(query, skip, limit)
-                } catch (e) {
-                    console.log(e)
+                } catch (error) {
+                    console.log(error)
                     return {
                         status: false,
                         msg: 'Erro interno no servidor'
@@ -27,10 +41,34 @@ class MongoHeroRoutes extends BaseRoutes {
     }
     create() {
         return {
-            path: '/heroess',
-            method: 'GET',
-            handler: (request, headers) => {
-                return 'teste'
+            path: '/newHero',
+            method: 'POST',
+            config: {
+                validate: {
+                    failAction:(request, headers, error) => {
+                        throw error
+                    },
+                    payload: Joi.object({
+                        name: Joi.string().required().min(3).max(100),
+                        skill: Joi.string().required()
+                    })
+                }
+            },
+            handler: (request) => {
+                try {
+                    const payload = request.payload
+                    this.db.create(payload)
+                    return {
+                        statusCode: 200,
+                        msg:'Heroi inserido com sucesso'
+                    }
+                }catch (error) {
+                    console.log(error)
+                    return {
+                        status: false,
+                        msg:'Erro interno no servidor'
+                    }
+                }
             }
         }
     }
