@@ -57,11 +57,7 @@ class MongoHeroRoutes extends BaseRoutes {
             handler: (request) => {
                 try {
                     const payload = request.payload
-                    this.db.create(payload)
-                    return {
-                        statusCode: 200,
-                        msg:'Heroi inserido com sucesso'
-                    }
+                    return this.db.create(payload)
                 }catch (error) {
                     console.log(error)
                     return {
@@ -72,12 +68,62 @@ class MongoHeroRoutes extends BaseRoutes {
             }
         }
     }
-    update() {
+    updateWithPut() {
         return {
-            path: '/',
-            method: 'GET',
+            path: '/putHero',
+            method: 'PUT',
+            config: {
+                validate: {
+                    failAction:(request, headers, error) => {
+                        console.log(error)
+                        throw error
+                    },
+                    payload: Joi.object({
+                        id: Joi.string().required().min(1).max(100),
+                        newHero: Joi.object().required()
+                    })
+                }
+            },
             handler: (request, headers) => {
-                return 'Home'
+                try {
+                    const {id, newHero} = request.payload
+                    return this.db.update(id, newHero)
+                } catch (e) {
+                    console.log(e)
+                    return {
+                        status: false,
+                        msg:'Erro interno no servidor'
+                    }
+                }
+            }
+        }
+    }
+    updateWithPatch() {
+        return {
+            path: '/patchHero',
+            method: 'PATCH',
+            config: {
+                validate: {
+                    failAction:(request, headers, error) => {
+                        console.log(error)
+                        throw error
+                    },
+                    // payload: Joi.object({
+                    //     id: Joi.string().required().min(1).max(100),
+                    //     newHero: Joi.object().required()
+                    // })
+                }
+            },
+            handler: (request, headers) => {
+                try {
+                    return 'up'
+                } catch (e) {
+                    console.log(e)
+                    return {
+                        status: false,
+                        msg:'Erro interno no servidor'
+                    }
+                }
             }
         }
     }
